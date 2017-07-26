@@ -55,6 +55,24 @@ export default {
 }
 ```
 
+
+### Performing multiple calls (in parallel) using async/await
+
+```js
+export default {
+  async asyncData({ query, error }) {
+    let [postRes, commentRes] = await Promise.all([
+      axios.get('https://my-api/posts/'),
+      axios.get('https://my-api/comments/'),
+    ])
+    return {
+       posts: postRes.data.slice(0,5),
+       comments: commentRes.data.slice(0,5)
+    }
+  }
+}
+```
+
 ### Displaying the data
 
 The result from asyncData will be **merged** with data.
